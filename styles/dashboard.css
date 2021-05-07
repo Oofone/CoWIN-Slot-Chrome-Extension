@@ -1,0 +1,42 @@
+body {
+  width:max-content;
+}
+#leftbox {
+  float:left; 
+  width:40%;
+}
+#middlebox {
+  float:left; 
+  width:20%;
+}
+#rightbox {
+  float:right;
+  width:40%;
+}
+.cleared {
+  clear: both;
+}
+h2, h3 {
+  text-align:left;
+}
+select {
+  float: right;
+  direction: rtl;
+}
+option {
+  direction: rtl;
+}
+label {
+  float: left;
+  clear: both;
+}
+.gone {
+  display: none;
+}
+.centered-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height: 50%;
+}

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+
+  <!-- Head -->
+
+  <head>
+    <title>CoWINWIN</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />  
+    <link rel="stylesheet" href="styles/dashboard.css">
+    <script type="module" src="js/cowinwin.dashboard.js"></script>
+  </head>
+
+  <body id="root">
+
+    <!-- Display Node for the Main Form-->
+
+    <div id="formDisplay">
+      <div>
+        <h2 style="margin-bottom: 0px;padding-bottom: 0px;">CoWINWIN</h2>
+        <small>Helping you actually win with CoWIN.</small>
+      </div>
+      <hr>
+      <div>
+        <p>Provide your slot details below and we'll keep checking if a slot is available in the <b>background</b>.</p>
+        <p>You can go about your work, and we'll notify you as soon as we find an open slot.</p>
+      </div>
+      <hr>
+      <div>
+
+        <!-- Form for Query Parameters -->
+
+        <form id="mainForm">
+
+          <!-- Age Param -->
+
+          <h3>Age Group</h3>
+          <label for="eighteenPlus">18+</label>
+          <input type="radio" name="ageGroup" id="eighteenPlus" value="eighteenPlus"><br>
+          <label for="fortyFivePlus">45+</label>
+          <input type="radio" name="ageGroup" id="fortyFivePlus" value="fortyFivePlus"><br>
+
+          <!-- Horizontal Region Selection Pane -->
+
+          <div id="boxes">
+
+            <div id="leftbox">
+              <h3>Pincode</h3>
+              <input type="text" name="pincode" id="pincode"><br><br>
+            </div>
+
+            <div id="middlebox">
+              <h2>OR</h2>
+            </div>
+
+            <div id="rightbox">
+              <h3>Region</h3>
+              <label for="state">State</label>
+              <select name="state" id="state" form="mainForm">
+                <option value="Unselected" selected>Unselected</option>
+              </select>
+              </br>
+              <label for="city">City</label>
+              <select name="city" id="city" form="mainForm" disabled>
+                <option value="Unselected" selected>Unselected</option>
+              </select>
+            </div>
+
+            <!-- Submit Button -->
+
+            <div class="cleared" >
+              <button type="button" id="searchSlots">Start Search</button>
+            </div>  
+          </div>
+          <input type="hidden" name="locationSelector" value="pincode">
+        </form>  
+      </div>
+    </div>
+
+    <!-- Display Node during polling of Slots -->
+
+    <div id="pollingDisplay">
+      <img class="centered-image" src="static/images/loading.gif">
+      <div>
+        <button id="stopSearch">Stop Search</button>
+      </div>
+    </div>
+
+    <!-- Display Node after positive results are found -->
+    <!-- Additionally a new Tab would be opened in the browser leading to the CoWIN Website. -->
+
+    <div id="foundDisplay">
+      <div>
+        <p id="result">Result:</p>
+      </div>
+    </div>
+    
+  </body>
+</html>

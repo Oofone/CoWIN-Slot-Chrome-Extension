@@ -1,0 +1,22 @@
+{
+  "name": "CoWINWIN",
+  "description": "This extension will keep checking for available Vaccination Slots for your given Configuration (Age + Region) and let you know as soon as a Slot is Available.",
+  "version": "1.0",
+  "author": "Shreyas Gopal",
+  "manifest_version": 3,
+
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {                   
+    "19": "Injection.png",
+    "38": "Injection.png",
+    "48": "Injection.png",
+    "128": "Injection.png"  
+  },    
+  "action": {
+    "default_popup": "dashboard.html",
+    "default_icon": "Injection.png"
+  },
+  "permissions": ["storage", "debugger", "cookies"]
+}
