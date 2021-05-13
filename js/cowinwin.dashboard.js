@@ -10,6 +10,11 @@ import {
   RESULT_STORE_KEYS
 } from "./constants.js"
 
+// Constants
+
+const COWIN_URL = "https://selfregistration.cowin.gov.in/";
+const newTabInfoSetting = "NEW_TAB_SETTING";
+
 // DOM Objects
 
 var root = document.getElementById(NODES.ROOT);
@@ -23,6 +28,8 @@ var stateSelect = document.getElementById("state");
 var citySelect = document.getElementById("city");
 var pincodeInput = document.getElementById("pincode");
 var errorDisplay = document.getElementById("pincodeError");
+var cwButton = document.getElementById("cowinWebsitButton");
+var newTabInfo = document.getElementById("newTabInfo");
 
 // Listeners and Callbacks Registration 
 
@@ -50,6 +57,8 @@ stopSearchButton.onclick = function() {
 restartSearchButton.onclick = function() {
   chrome.storage.local.set({[STATE_IDENTIFIER]: [STATES.POLLING]})
 }
+
+cwButton.onclick = () => newTabInfoDisplayer(3000);
 
 chrome.storage.onChanged.addListener( function(change, area) {
   if (area == "local" && Object.keys(change).includes(STATE_IDENTIFIER)) {
@@ -145,6 +154,8 @@ function loadIdle() {
   hide(pollingNode);
   hide(resultNode);
   show(idleNode);
+
+  chrome.storage.local.set({[newTabInfoSetting]: "DISABLED"})
 } 
 
 function loadPolling() {
@@ -152,6 +163,8 @@ function loadPolling() {
   hide(idleNode); 
   hide(resultNode);
   show(pollingNode);
+
+  chrome.storage.local.set({[newTabInfoSetting]: "DISABLED"})
 }
 
 function loadFound() {
@@ -160,6 +173,24 @@ function loadFound() {
   hide(idleNode);
   hide(pollingNode);
   show(resultNode);
+
+  chrome.storage.local.get(newTabInfoSetting, function(value){
+    if(value[newTabInfoSetting] === "DISABLED") {
+      chrome.tabs.create({ url: "dashboard.html" });
+      chrome.storage.local.set({[newTabInfoSetting]: "ENABLED"})
+    }
+  });
+}
+
+function newTabInfoDisplayer(seconds) {
+  if (seconds === 0) {
+    chrome.tabs.create({ url: COWIN_URL });
+    newTabInfo.innerHTML = "COWIN Website Opened!";
+  } else {
+    newTabInfo.innerHTML = "COWIN Website Opening in " + (seconds/1000) + " seconds.";
+    seconds -= 1000;
+    sleep(seconds).then(() => newTabInfoDisplayer(seconds));
+  }
 }
 
 // Network Calls and Functions
@@ -331,6 +362,10 @@ function copyTextToClipboard(text) {
   }
 
   document.body.removeChild(textArea);
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 // Validation functions
