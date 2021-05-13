@@ -18,5 +18,6 @@
     "default_popup": "dashboard.html",
     "default_icon": "Injection.png"
   },
-  "permissions": ["storage", "debugger", "cookies"]
+  "permissions": ["storage", "debugger", "cookies"],
+  "host_permissions": ["*://*.co-vin.in/"]
 }

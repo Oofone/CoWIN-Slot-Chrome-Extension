@@ -10,6 +10,7 @@ body {
   width:20%;
 }
 #rightbox {
+  width:fit-content;
   float:right;
   width:40%;
 }
@@ -20,15 +21,8 @@ h2, h3 {
   text-align:left;
 }
 select {
-  float: right;
-  direction: rtl;
-}
-option {
-  direction: rtl;
-}
-label {
-  float: left;
-  clear: both;
+  margin-inline-start: auto;
+  margin-left: auto;
 }
 .gone {
   display: none;
@@ -39,4 +33,7 @@ label {
   margin-right: auto;
   width: 50%;
   height: 50%;
+}
+.inputError {
+  color: red;
 }
