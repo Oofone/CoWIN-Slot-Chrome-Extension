@@ -23,6 +23,7 @@ var pollingNode = document.getElementById(NODES.SEARCHING);
 var resultNode = document.getElementById(NODES.FOUND);
 var searchButton = document.getElementById("searchSlots");
 var stopSearchButton = document.getElementById("stopSearch");
+var resetSearchButton = document.getElementById("resetSearch");
 var restartSearchButton = document.getElementById("restartSearch");
 var stateSelect = document.getElementById("state");
 var citySelect = document.getElementById("city");
@@ -51,6 +52,10 @@ searchButton.onclick = function () {
 };
 
 stopSearchButton.onclick = function() {
+  chrome.storage.local.set({[STATE_IDENTIFIER]: [STATES.IDLE]})
+};
+
+resetSearchButton.onclick = function() {
   chrome.storage.local.set({[STATE_IDENTIFIER]: [STATES.IDLE]})
 };
 
@@ -173,13 +178,6 @@ function loadFound() {
   hide(idleNode);
   hide(pollingNode);
   show(resultNode);
-
-  chrome.storage.local.get(newTabInfoSetting, function(value){
-    if(value[newTabInfoSetting] === "DISABLED") {
-      chrome.tabs.create({ url: "dashboard.html" });
-      chrome.storage.local.set({[newTabInfoSetting]: "ENABLED"})
-    }
-  });
 }
 
 function newTabInfoDisplayer(seconds) {

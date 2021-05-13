@@ -47,6 +47,8 @@ var RESULT_STORE_KEYS = {
 var months = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"];
 var daysOfMonth = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"];
 
+const newTabInfoSetting = "NEW_TAB_SETTING";
+
 // Runtime Listeners
 
 chrome.runtime.onInstalled.addListener(function() {
@@ -61,6 +63,30 @@ chrome.runtime.onSuspend.addListener(function() {
   chrome.storage.local.set({[STATE_IDENTIFIER]: [STATES.IDLE]});
 });
 
+chrome.storage.onChanged.addListener( function(change, area) {
+  if (area == "local" && Object.keys(change).includes(STATE_IDENTIFIER)) {
+    console.log("STATE Changed");
+    console.log(change);  
+    chrome.storage.local.get(STATE_IDENTIFIER, function(storage) {
+      //Notify that we get the value.
+      var state = storage.STATE_IDENTIFIER;
+      console.log('STATE_IDENTIFIER Value is ' + state);
+      if (state === undefined) {
+        chrome.storage.local.set({[STATE_IDENTIFIER]: [STATES.IDLE]}, loadIdle()); 
+        return;
+      } 
+  
+      if (state == STATES.FOUND) {
+        chrome.storage.local.get(newTabInfoSetting, function(value){
+          if(value[newTabInfoSetting] === "DISABLED") {
+            chrome.tabs.create({ url: "dashboard.html" });
+            chrome.storage.local.set({[newTabInfoSetting]: "ENABLED"})
+          }
+        });      
+      }
+    }); 
+  }
+});
 // Main polling loop
 
 function poll () {
