@@ -318,6 +318,7 @@ function setLocationSelectorValue(value) {
 
 function setResults() {
   chrome.storage.local.get(function(result) {
+    var centerId = result[RESULT_STORE_KEYS.CENTER_ID];
     var centerName = result[RESULT_STORE_KEYS.CENTER_NAME];
     var centerSlots = result[RESULT_STORE_KEYS.CENTER_SLOTS];
     var centerAddress = result[RESULT_STORE_KEYS.CENTER_ADDRESS];
@@ -326,6 +327,7 @@ function setResults() {
     var centerCity = result[RESULT_STORE_KEYS.CENTER_CITY];
     var centerState = result[RESULT_STORE_KEYS.CENTER_STATE];
 
+    document.getElementById("result-id").innerHTML = centerId;
     document.getElementById("result-center").innerHTML = centerName;
     document.getElementById("result-slots").innerHTML = centerSlots;
     document.getElementById("result-address").innerHTML = centerAddress;

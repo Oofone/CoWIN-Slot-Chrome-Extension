@@ -192,6 +192,10 @@ function updateDatastoresAndState(centers, ageSelection) {
 }
 
 function updateStoresForCenter(center, slots) {
+
+  console.log("Best Center with " + slots + " slots:");
+  console.log(center);
+
   if (center === undefined) {
     return;
   }
@@ -228,9 +232,9 @@ function centerFilter(center, ageSelection) {
 
 function doesAgeMatch(min_age_limit, ageSelection) {
   if (ageSelection === "eighteenPlus") {
-    return min_age_limit === 18;
+    return min_age_limit <= 18;
   } else if (ageSelection === "fortyFivePlus") {
-    return min_age_limit === 45;
+    return min_age_limit <= 45;
   }
 
   return false;
